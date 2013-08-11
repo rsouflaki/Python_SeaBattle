@@ -5,6 +5,8 @@ OFFSET = 10
 counter = 0
 board = None
 
+
+
 class Board:
     boats=[]
     def __init__(self, size):
