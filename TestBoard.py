@@ -2,7 +2,7 @@ import unittest
 
 from SeaBattle import Position
 
-class TestSequenceFunctions(unittest.TestCase):
+class TestBoard(unittest.TestCase):
 
     def setUp(self):
         pass
