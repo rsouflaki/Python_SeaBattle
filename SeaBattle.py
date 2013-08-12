@@ -189,6 +189,7 @@ if __name__ == '__main__':
 
 # TODO:
 # Finish games when all boats are sunk
+#Confirm github works
 # add more boats
 # AI opponent (stupid)
 # Check if position is already tried
