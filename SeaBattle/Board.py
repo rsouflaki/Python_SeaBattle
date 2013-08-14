@@ -56,14 +56,14 @@ class Board:
         
         
     def isAHit(self, hitPosition):
-        print 'You send your rocket in: ' + str(hitPosition.getRow()) + ',' + str(hitPosition.getColumn())
+        Utils.tellUser( 'You send your rocket in: ' + str(hitPosition.getRow()) + ',' + str(hitPosition.getColumn()))
         for boat in self.boats:
             for cell in boat.cells:
                 if hitPosition.getRow() == cell.getRow() and hitPosition.getColumn() == cell.getColumn():
                     # update the boat cell
                     cell.hit()
                     if(boat.isCaput()):
-                        print 'you sunk one of my boats!'
+                        Utils.tellUser( 'you sunk one of my boats!' )
                     return True 
         return False
     
@@ -98,8 +98,8 @@ class Board:
     def sendRocket(self, position):
         cell = self.getCellInPosition(position)
         if (self.isAHit(cell)):
-            print 'Aaaargh you hit my boat'
+            Utils.tellUser( 'Aaaargh you hit my boat' )
         else:
-            print 'You hit Water sucker'
+            Utils.tellUser( 'You hit Water sucker' )
         cell.hit()
     
