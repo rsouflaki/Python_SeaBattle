@@ -8,25 +8,38 @@ import os
 if __name__ == '__main__': 
     #def playGame():        
     os.system('cls') #on windows
-    Utils.tellUser ('Select 1 or 2 players') 
-    reply = ''
-    while reply != '1' and reply != '2':
-        reply = raw_input()
+    print 'input name for player 1'
 
-    if reply == '1':
-            
-        userA = User.User(Utils.BOARDSIZE)
-        userA.board.setupBoard(Utils.BOATSIZES)
-        while(userA.board.canStillPlay()):
-            Utils.play(userA.board)
-            Utils.counter += 1
+    name = raw_input()
+    userA = User.User(name)
+
+    print 'input name for player 2'
+    nameB = raw_input()
+    userB = User.User(nameB)
+
+    
+    while(1):
+        rocketPositionA = userA.getAttackPosition(userB)
+        userA.sendRocket(rocketPositionA, userB)
+        userB.board.printBoard()
+        if(userB.isDefeated()):
+            Utils.tellUser( ' ' * Utils.OFFSET + 'Player ' + userA.getName() + 'won! GAME OVER')
+            break
+        
+        rocketPositionB = userB.getAttackPosition(userA)
+        userB.sendRocket(rocketPositionB, userA)
         userA.board.printBoard()
-        Utils.tellUser( ' ' * Utils.OFFSET + 'GAME OVER')
+        if(userA.isDefeated()):
+            Utils.tellUser( ' ' * Utils.OFFSET + 'Player ' + userB.getName() + 'won! GAME OVER')
+            break
+        
 
 
 # TODO:
 # AI opponent (stupid)
-# break ask user
+# Network 
+# Graphics
+# User should be able to place his own boats
 
 
 

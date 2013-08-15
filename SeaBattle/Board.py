@@ -68,20 +68,17 @@ class Board:
         return False
     
     
-    def canStillPlay(self):
+    def allBoatsSunk(self):
         """
         If all the boats are sunk, the game is over
         """
         for boat in self.boats:
             if not boat.isCaput():
-                return True
-        return False
+                return False
+        return True
             
             
-    def isValidRange(self, num):
-        if num >= 0 and num < self.size:
-            return True
-        return False
+
     
     
     def isValidPosition(self, position):
@@ -90,6 +87,10 @@ class Board:
                 return True
         return False
     
+    def isValidRange(self, num):
+        if num >= 0 and num < self.size:
+            return True
+        return False
     
     def getCellInPosition(self, position):
         return self.grid[position.getRow()][position.getColumn()]
