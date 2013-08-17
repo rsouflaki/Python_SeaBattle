@@ -2,22 +2,24 @@ from SeaBattle import Board, Utils, Position
 import os
 
 class User:
-    def __init__(self, name):
+    def __init__(self, name, clientSocket):
         self.name = name
         self.board = Board.Board(Utils.BOARDSIZE)
         self.board.setupBoard(Utils.BOATSIZES)
         self.counter = 0
+        self.clientSocket = clientSocket
             
     def getName(self):
         return self.name
     
     def tellUser(self, message):
-        print message
+        self.clientSocket.send(message)
         
     def getAttackPosition(self, opponent):
         rocketPosition = None
         self.tellUser(self.name + ' here is your opponent\'s board . You have tried: ' + str(self.counter) + ' times')
-        opponent.board.printBoard() 
+        boardInString = opponent.board.getBoardInString()
+        self.tellUser(boardInString)
         while(1):
             self.tellUser('send a rocket to which row')
             rocketRow = self.getPositionFromUser(Utils.BOARDSIZE)  
@@ -33,11 +35,11 @@ class User:
     
     
     def sendRocket(self, rocketPosition, opponent):
-        opponent.board.sendRocket(rocketPosition)    
+        return opponent.board.sendRocket(rocketPosition)    
            
     def getPositionFromUser(self, boardSize):
         while(1):
-            pos = raw_input()
+            pos = self.clientSocket.recv(1024)
             if(pos.isdigit()):
                 if self.board.isValidRange(int(pos)):
                     return int(pos)
@@ -46,4 +48,10 @@ class User:
             
     def isDefeated(self):
         return self.board.allBoatsSunk()
+    
+    def getPromptForAttack(self):
+        prompt = self.name + ', here is your opponent\'s board. You have tried: ' + str(self.counter) + ' times'
+        return prompt
+    
+
     

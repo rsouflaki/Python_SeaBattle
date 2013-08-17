@@ -8,15 +8,8 @@ counter = 0
 BOATSIZES = [5, 4, 3 ,3, 2]
 
 
-
-def tellUser(question):
-    print question
-
 def getReply():
     return raw_input()    
-
-
-    
 
 
 def getRandomPosition(maxlimit):
@@ -29,3 +22,9 @@ def getRandomOrientation():
     orientation = {0:'North', 1:'East', 2:'South', 3:'West'}
     i = random.randint(0, 3)
     return orientation[i]
+
+
+def isValidCoordinate(coordinate, boardSize):
+    if coordinate >= 0 and coordinate < boardSize:
+        return True
+    return False

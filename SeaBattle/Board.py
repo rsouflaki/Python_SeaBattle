@@ -45,25 +45,27 @@ class Board:
         return True
         
     
-    def printBoard(self):
-        print ' '
+    def getBoardInString(self):
+        message=''
+        message += ' \n'
         for i in range(self.size):
-            print ' ' * Utils.OFFSET,
+            message += ' ' * Utils.OFFSET
             for j in range(self.size):
-                print str(self.grid[i][j].toString()) + ' ',
-            print ''
-        print ' '
+                message =message + str(self.grid[i][j].toString()) + ' '
+            message += '\n'
+        message += '\n'
+        return message
         
         
     def isAHit(self, hitPosition):
-        Utils.tellUser( 'You send your rocket in: ' + str(hitPosition.getRow()) + ',' + str(hitPosition.getColumn()))
         for boat in self.boats:
             for cell in boat.cells:
                 if hitPosition.getRow() == cell.getRow() and hitPosition.getColumn() == cell.getColumn():
                     # update the boat cell
                     cell.hit()
                     if(boat.isCaput()):
-                        Utils.tellUser( 'you sunk one of my boats!' )
+                        #Utils.tellUser( 'you sunk one of my boats!' )
+                        pass
                     return True 
         return False
     
@@ -82,25 +84,23 @@ class Board:
     
     
     def isValidPosition(self, position):
-        if self.isValidRange(position.getRow()) and self.isValidRange(position.getColumn()):
+        if Utils.isValidCoordinate(position.getRow(), self.size) and Utils.isValidCoordinate(position.getColumn(), self.size):
             if not self.grid[position.getRow()][position.getColumn()].getIsBoat():
                 return True
         return False
-    
-    def isValidRange(self, num):
-        if num >= 0 and num < self.size:
-            return True
-        return False
+
     
     def getCellInPosition(self, position):
         return self.grid[position.getRow()][position.getColumn()]
     
-    
+    #TODO: maybe the board should not define the responseString
     def sendRocket(self, position):
+        response = None
         cell = self.getCellInPosition(position)
         if (self.isAHit(cell)):
-            Utils.tellUser( 'Aaaargh you hit my boat' )
+            response = 'Aaaargh you hit my boat'
         else:
-            Utils.tellUser( 'You hit Water sucker' )
+            response = 'You hit Water sucker'
         cell.hit()
+        return response
     
